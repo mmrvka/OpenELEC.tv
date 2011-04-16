@@ -1,6 +1,7 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2011 Anthony Nash (nash.ant@gmail.com)
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,19 +19,22 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="glib"
-PKG_VERSION="2.28.6"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
-PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.28/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS="zlib libiconv"
-PKG_BUILD_DEPENDS="toolchain zlib libiconv gtk-doc glib-host"
-PKG_PRIORITY="optional"
-PKG_SECTION="devel"
-PKG_SHORTDESC="glib: C support library"
-PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
-PKG_IS_ADDON="no"
+# Starting Sickbeard downloader daemon
+#
+# runlevels: openelec, textmode
 
-PKG_AUTORECONF="yes"
+
+(
+  if [ -f /var/config/settings.conf ]; then
+    . /var/config/settings.conf
+
+    if [ "$SABNZBD_START" = "true" ]; then
+
+      wait_for_network
+
+      progress "Starting sickbeard downloader daemon"
+
+      python /usr/lib/sickbeard/SickBeard.py --datadir $HOME/.sickbeard/
+    fi
+  fi
+)&
