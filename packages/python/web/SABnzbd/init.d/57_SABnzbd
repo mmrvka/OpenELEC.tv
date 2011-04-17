@@ -22,31 +22,21 @@
 #
 # runlevels: openelec, textmode
 
-
 (
   if [ -f /var/config/settings.conf ]; then
     . /var/config/settings.conf
 
     if [ "$SABNZBD_START" = "true" ]; then
 
-      wait_for_network
-
-      progress "Starting SABnzbd Newsgroup downloader daemon"
-
+      mkdir -p $HOME/.sabnzbd
       mkdir -p $HOME/downloads
       mkdir -p $HOME/downloads/incoming
       mkdir -p $HOME/downloads/watch
 
-      if [ ! -f $HOME/.sabnzbd/sabnzbd.conf ]; then
-        mkdir -p $HOME/.sabnzbd
-        cp /usr/lib/SABnzbd/sabnzbd.config $HOME/.sabnzbd/sabnzbd.conf
+      wait_for_network
 
-      # create api key
-        API_KEY=`cat /dev/urandom |od -N16 -tx1 |cut -c8- |tr -d ' \n'`
-        sed -e "s,@API_KEY@,$API_KEY,g" -i $HOME/.sabnzbd/sabnzbd.conf
-      fi
-
-      python /usr/lib/SABnzbd/SABnzbd.py -d -f $HOME/.sabnzbd/sabnzbd.conf -l 0 > /dev/null 2>&1
+      progress "Starting SABnzbd Newsgroup downloader daemon"
+        python /usr/lib/SABnzbd/SABnzbd.py -d -f $HOME/.sabnzbd/sabnzbd.conf -l 0 > /dev/null 2>&1
     fi
   fi
 )&

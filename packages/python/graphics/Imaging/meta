@@ -1,7 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
-#      Copyright (C) 2011 Anthony Nash (nash.ant@gmail.com)
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,25 +18,19 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-# Starting Sickbeard downloader daemon
-#
-# runlevels: openelec, textmode
+PKG_NAME="Imaging"
+PKG_VERSION="1.1.7"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="BSD"
+PKG_SITE="http://www.pythonware.com/products/pil/"
+PKG_URL="http://effbot.org/downloads/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS="Python distribute zlib freetype $LIBJPEG"
+PKG_BUILD_DEPENDS="toolchain Python distribute distutilscross zlib freetype $LIBJPEG"
+PKG_PRIORITY="optional"
+PKG_SECTION="python/system"
+PKG_SHORTDESC="pil: Imaging handling/processing for Python"
+PKG_LONGDESC="The Python Imaging Library (PIL) adds image processing capabilities to your Python interpreter. This library supports many file formats, and provides powerful image processing and graphics capabilities."
+PKG_IS_ADDON="no"
 
-(
-  if [ -f /var/config/settings.conf ]; then
-    . /var/config/settings.conf
-
-    if [ "$SABNZBD_START" = "true" ]; then
-
-      mkdir -p /var/run
-      mkdir -p $HOME/.sickbeard
-
-      wait_for_network
-
-      progress "Starting sickbeard downloader daemon"
-      python /usr/lib/SickBeard/SickBeard.py --daemon \
-                                             --pidfile=/var/run/sickbeard.pid \
-                                             --datadir $HOME/.sickbeard
-    fi
-  fi
-)&
+PKG_AUTORECONF="no"

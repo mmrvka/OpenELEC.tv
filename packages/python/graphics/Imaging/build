@@ -1,7 +1,8 @@
+#!/bin/sh
+
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
-#      Copyright (C) 2011 Anthony Nash (nash.ant@gmail.com)
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,25 +20,17 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-# Starting Sickbeard downloader daemon
-#
-# runlevels: openelec, textmode
+. config/options $1
 
-(
-  if [ -f /var/config/settings.conf ]; then
-    . /var/config/settings.conf
+export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
+export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib -L$SYSROOT_PREFIX/lib"
 
-    if [ "$SABNZBD_START" = "true" ]; then
+cd $PKG_BUILD
 
-      mkdir -p /var/run
-      mkdir -p $HOME/.sickbeard
+python setup.py build --cross-compile
+python setup.py install -O1 --skip-build --prefix /usr --root .install
 
-      wait_for_network
+find .install -name "*.py" -exec rm -rf "{}" ";"
+find .install -name "*.pyo" -exec rm -rf "{}" ";"
 
-      progress "Starting sickbeard downloader daemon"
-      python /usr/lib/SickBeard/SickBeard.py --daemon \
-                                             --pidfile=/var/run/sickbeard.pid \
-                                             --datadir $HOME/.sickbeard
-    fi
-  fi
-)&
+rm -rf .install/usr/bin
