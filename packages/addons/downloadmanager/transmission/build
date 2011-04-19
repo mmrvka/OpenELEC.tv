@@ -1,3 +1,5 @@
+#!/bin/sh
+
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
@@ -18,19 +20,32 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="transmission"
-PKG_VERSION="2.20"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_SITE="http://www.transmissionbt.com/"
-PKG_URL="http://download.transmissionbt.com/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS="zlib libiconv openssl curl libevent connman"
-PKG_BUILD_DEPENDS="toolchain libiconv zlib openssl curl libevent"
-PKG_PRIORITY="optional"
-PKG_SECTION="system"
-PKG_SHORTDESC="transmission: a fast, easy and free BitTorrent client"
-PKG_LONGDESC="transmission is a fast, easy and free BitTorrent client"
-PKG_IS_ADDON="no"
+. config/options $1
 
-PKG_AUTORECONF="yes"
+# transmission (svn 11666) fails to build with LTO support
+  strip_lto
+
+export LDFLAGS="$LDFLAGS -liconv"
+
+cd $PKG_BUILD
+./configure --host=$TARGET_NAME \
+            --build=$HOST_NAME \
+            --prefix=/usr \
+            --sysconfdir=/etc \
+            --localstatedir=/var \
+            --disable-static \
+            --enable-shared \
+            --enable-largefile \
+            --disable-gtk \
+            --disable-libnotify \
+            --disable-libappindicator \
+            --disable-libcanberra \
+            --disable-gconf2 \
+            --disable-nls \
+            --disable-cli \
+            --disable-mac \
+            --enable-lightweight \
+            --enable-daemon \
+            --with-gnu-ld \
+
+make V=1
