@@ -18,25 +18,9 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-# Starting SABnzbd Newsgroup downloader daemon
-#
-# runlevels: openelec, textmode
+import sys
+import xbmcaddon
+import os
 
-(
-  if [ -f /var/config/settings.conf ]; then
-    . /var/config/settings.conf
-
-    if [ "$SABNZBD_START" = "true" ]; then
-
-      mkdir -p $HOME/.sabnzbd
-      mkdir -p $HOME/downloads
-      mkdir -p $HOME/downloads/incoming
-      mkdir -p $HOME/downloads/watch
-
-      wait_for_network
-
-      progress "Starting SABnzbd Newsgroup downloader daemon"
-        python /usr/lib/SABnzbd/SABnzbd.py -d -f $HOME/.sabnzbd/sabnzbd.conf -l 0 > /dev/null 2>&1
-    fi
-  fi
-)&
+if ( __name__ == "__main__" ):
+    os.system("sh start.sh")
