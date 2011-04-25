@@ -245,3 +245,6 @@
 # set the addon dirs
   ADDON_PATH="$OS_VERSION/$PROJECT/$TARGET_ARCH"
   ADDON_URL="$ADDON_SERVER_URL/$ADDON_PATH"
+
+# build makemkv libs
+  MAKEMKV="no"

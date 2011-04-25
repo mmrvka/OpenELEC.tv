@@ -101,6 +101,7 @@ mkdir -p $INSTALL
 # Multimedia support
   [ ! "$MEDIACENTER" = "no" ] && $SCRIPTS/install mediacenter
   [ "$TVHEADEND" = "yes" ] && $SCRIPTS/install hts-tvheadend
+  [ "$MAKEMKV" = "yes" ] && $SCRIPTS/install makemkv
 
 # Automounter support
   [ "$UDISKS" = "yes" ] && $SCRIPTS/install udisks
