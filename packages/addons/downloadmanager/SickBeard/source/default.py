@@ -18,19 +18,9 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="libtool-host"
-PKG_VERSION=""
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnu.org/software/libtool/libtool.html"
-PKG_URL=""
-PKG_DEPENDS=""
-PKG_BUILD_DEPENDS="ccache"
-PKG_PRIORITY="optional"
-PKG_SECTION="toolchain/devel"
-PKG_SHORTDESC="libtool: Generic library support script"
-PKG_LONGDESC="This is GNU Libtool, a generic library support script. Libtool hides the complexity of using shared libraries behind a consistent, portable interface."
-PKG_IS_ADDON="no"
+import sys
+import xbmcaddon
+import os
 
-PKG_AUTORECONF="no"
+if ( __name__ == "__main__" ):
+    os.system("sh start.sh")

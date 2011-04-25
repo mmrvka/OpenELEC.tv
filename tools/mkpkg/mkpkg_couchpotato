@@ -1,3 +1,4 @@
+#!/bin/sh
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
@@ -18,19 +19,25 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="libtool-host"
-PKG_VERSION=""
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnu.org/software/libtool/libtool.html"
-PKG_URL=""
-PKG_DEPENDS=""
-PKG_BUILD_DEPENDS="ccache"
-PKG_PRIORITY="optional"
-PKG_SECTION="toolchain/devel"
-PKG_SHORTDESC="libtool: Generic library support script"
-PKG_LONGDESC="This is GNU Libtool, a generic library support script. Libtool hides the complexity of using shared libraries behind a consistent, portable interface."
-PKG_IS_ADDON="no"
+echo "getting sources..."
+  if [ ! -d CouchPotato.git ]; then
+    git clone git://github.com/RuudBurger/CouchPotato.git CouchPotato.git
+  fi
 
-PKG_AUTORECONF="no"
+  cd CouchPotato.git
+    git pull
+    GIT_REV=`git log -n1 --format=%h`
+  cd ..
+
+echo "copying sources..."
+  rm -rf CouchPotato-$GIT_REV
+  cp -R CouchPotato.git CouchPotato-$GIT_REV
+
+echo "cleaning sources..."
+  rm -rf CouchPotato-$GIT_REV/.git
+
+echo "packing sources..."
+  tar cvjf CouchPotato-$GIT_REV.tar.bz2 CouchPotato-$GIT_REV
+
+echo "remove temporary sourcedir..."
+  rm -rf CouchPotato-$GIT_REV
