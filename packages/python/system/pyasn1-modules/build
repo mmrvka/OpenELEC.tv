@@ -22,21 +22,9 @@
 
 . config/options $1
 
-$SCRIPTS/install curl
-#$SCRIPTS/build lua
-$SCRIPTS/install boost
-$SCRIPTS/install xerces-c
-$SCRIPTS/install $LIBJPEG
-$SCRIPTS/install libpng
-$SCRIPTS/install libvorbis
-$SCRIPTS/install libogg
-$SCRIPTS/install SDL
-$SCRIPTS/install SDL_image
-$SCRIPTS/install SDL_mixer
-$SCRIPTS/install SDL_net
-$SCRIPTS/install SDL_ttf
-$SCRIPTS/install openal-soft
-$SCRIPTS/install libX11
-$SCRIPTS/install pango
-$SCRIPTS/install fontconfig
-$SCRIPTS/install Mesa
+export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
+export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib -L$SYSROOT_PREFIX/lib"
+
+cd $PKG_BUILD
+
+python setup.py build --cross-compile bdist_egg --exclude-source-files

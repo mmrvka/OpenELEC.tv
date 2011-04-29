@@ -1,6 +1,6 @@
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2010 OpenELEC.tv
+#      http://www.openelec.tv
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,16 +18,13 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-# setup wakup devices
+# Starting Redis Server
 #
-# runlevels: openelec
+# runlevels: openelec, textmode
 
 (
-  if [ -f /proc/acpi/wakeup ]; then
-    progress "enable WakeUp devices"
+  wait_for_network
 
-    for device in `cat /proc/acpi/wakeup | grep "^U[H,S][B,C,0-9]" | grep "*disabled" | cut -f1 -d " "`; do
-      echo -n $device > /proc/acpi/wakeup
-    done
-  fi
+  progress "starting Redis server"
+    /usr/sbin/redis-server /etc/redis.conf
 )&
