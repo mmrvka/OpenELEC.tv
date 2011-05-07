@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
@@ -20,21 +18,10 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-. config/options $1
+#
+# setup cdrom settings
+#
+# runlevels: openelec, installer, textmode
 
-add_user sshd x 74 74 "Privilege-separated SSH" "/var/empty/sshd" "/bin/sh"
-add_group sshd 74
-
-mkdir -p $INSTALL/etc
-  cp $PKG_DIR/config/* $INSTALL/etc
-  cp $PKG_BUILD/moduli $INSTALL/etc
-
-mkdir -p $INSTALL/usr/bin
-  cp $PKG_BUILD/scp $INSTALL/usr/bin/
-  cp $PKG_BUILD/ssh $INSTALL/usr/bin/
-  cp $PKG_BUILD/ssh-add $INSTALL/usr/bin/
-  cp $PKG_BUILD/ssh-agent $INSTALL/usr/bin/
-  cp $PKG_BUILD/ssh-keygen $INSTALL/usr/bin/
-
-mkdir -p $INSTALL/usr/sbin
-  cp $PKG_BUILD/sshd $INSTALL/usr/sbin/
+progress "Setup some CDROM settings"
+  sysctl -w dev.cdrom.lock=0 > /dev/null 2>&1 &
