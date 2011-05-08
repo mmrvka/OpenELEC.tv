@@ -18,19 +18,19 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="alsa-lib"
-PKG_VERSION="1.0.24.1"
+PKG_NAME="diskdev_cmds"
+PKG_VERSION="332.14"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.alsa-project.org/"
-PKG_URL="http://dl.ambiweb.de/mirrors/ftp.alsa-project.org/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_LICENSE="APSL"
+PKG_SITE="http://src.gnu-darwin.org/DarwinSourceArchive/expanded/diskdev_cmds/"
+PKG_URL="http://src.gnu-darwin.org/DarwinSourceArchive/apsl/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS=""
 PKG_BUILD_DEPENDS="toolchain"
 PKG_PRIORITY="optional"
-PKG_SECTION="audio"
-PKG_SHORTDESC="alsa-lib: Advanced Linux Sound Architecture library"
-PKG_LONGDESC="ALSA (Advanced Linux Sound Architecture) is the next generation Linux Sound API. It provides much finer (->better) access to the sound hardware, has a unbeatable mixer API and supports stuff like multi channel hardware, digital outs and ins, uninterleaved sound data access, and an oss emulation layer (for the old applications). It is the prefered API for professional sound apps under Linux."
+PKG_SECTION="system"
+PKG_SHORTDESC="diskdev_cmds: hfs filesystem utilities"
+PKG_LONGDESC="The fsck and mkfs utliities for hfs and hfsplus filesystems."
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
