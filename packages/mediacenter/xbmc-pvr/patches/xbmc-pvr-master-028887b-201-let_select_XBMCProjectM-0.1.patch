@@ -55,24 +55,24 @@ diff -Naur xbmc-31903/configure.in xbmc-31903.patch/configure.in
 @@ -1401,6 +1424,7 @@
  AC_SUBST(SDL_DEFINES)
  AC_SUBST(BUILD_DVDCSS)
- AC_SUBST(BUILD_GOOM)
+ AC_SUBST(DISABLE_GOOM)
 +AC_SUBST(BUILD_XBMCPROJECTM)
  AC_SUBST(USE_EXTERNAL_FFMPEG)
- AC_SUBST(USE_EXTERNAL_LIBA52)
- AC_SUBST(USE_INTERNAL_LIBA52)
+ AC_SUBST(PYTHON_VERSION)
+ AC_SUBST(OUTPUT_FILES)
 @@ -1788,7 +1812,7 @@
        -DSYSCONF_INSTALL_DIR:PATH="${sysconfdir}" -DSHARE_INSTALL_PREFIX:PATH="${datadir}" .
  set +x
-   fi
+ fi
 -], [0])
 +], [$BUILD_XBMCPROJECTM])
  
  XB_CONFIG_MODULE([xbmc/visualizations/Goom/goom2k4-0],[
-   if test "$host_vendor" != "apple" ; then
+   ./configure  \
 diff -Naur xbmc-31903/Makefile.in xbmc-31903.patch/Makefile.in
 --- xbmc-31903/Makefile.in	2010-07-17 16:25:37.000000000 +0200
 +++ xbmc-31903.patch/Makefile.in	2010-07-17 16:46:16.391376663 +0200
-@@ -108,8 +108,10 @@
+@@ -144,10 +144,12 @@
  ifeq (@USE_OPENGL@,1)
  VIS_DIRS+=\
  	xbmc/visualizations/OpenGLSpectrum \
@@ -84,16 +84,6 @@ diff -Naur xbmc-31903/Makefile.in xbmc-31903.patch/Makefile.in
 +ifneq (@BUILD_XBMCPROJECTM@,1)
 +VIS_DIRS+=xbmc/visualizations/XBMCProjectM
 +endif
- ifeq ($(findstring osx,@ARCH@), osx)
- VIS_DIRS+=xbmc/visualizations/iTunes \
- 
-@@ -307,7 +309,9 @@
- ifneq (arm, $(ARCH))
- 	$(MAKE) -C xbmc/visualizations/OpenGLSpectrum
- 	$(MAKE) -C xbmc/visualizations/WaveForm
-+ifneq (@BUILD_XBMCPROJECTM@,1)
- 	$(MAKE) -C xbmc/visualizations/XBMCProjectM
-+endif
- ifeq ($(findstring osx,$(ARCH)), osx)
- 	$(MAKE) -C xbmc/visualizations/iTunes
+ ifeq (($(findstring osx,@ARCH@), osx),(@USE_OPENGL@,1)) 
+ VIS_DIRS+=xbmc/visualizations/iTunes
  endif

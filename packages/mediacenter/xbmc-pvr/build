@@ -133,7 +133,7 @@ do_autoreconf lib/libid3tag/libid3tag
             --disable-goom \
             $XBMC_PROJECTM \
             --disable-rsxs \
-            --disable-ccache \
+            --enable-ccache \
             $XBMC_PULSEAUDIO \
             --enable-ffmpeg-libvorbis \
             --disable-faac \
